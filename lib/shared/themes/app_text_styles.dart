@@ -21,7 +21,13 @@ class TextStyles {
   );
 
   static final price = GoogleFonts.concertOne(
-    fontSize: 24,
+    fontSize: 30,
     color: AppColors.secondary
+  );
+
+  static final moneyText = GoogleFonts.patrickHand(
+    fontSize: 23,
+    color: AppColors.secondary,
+    fontWeight: FontWeight.w700
   );
 }
