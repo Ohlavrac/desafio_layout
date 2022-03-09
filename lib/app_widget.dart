@@ -8,6 +8,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Desafio Layout",
+      debugShowCheckedModeBanner: false,
       initialRoute: "/main_page",
       routes: {
         "/main_page": (context) => MainPage(),

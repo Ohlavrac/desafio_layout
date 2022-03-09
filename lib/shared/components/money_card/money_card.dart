@@ -37,7 +37,7 @@ class MoneyCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                visibility ? Text("_.__", style: TextStyles.textsSimple,) : Text("R\$ ${_money}0", style: TextStyles.textsSimple,),
+                visibility ? Text("R\$ _.__", style: TextStyles.price,) : Text("R\$ ${_money}0", style: TextStyles.price,),
                 Text("em novos pedidos", style: TextStyles.moneyText)
               ],
             )
