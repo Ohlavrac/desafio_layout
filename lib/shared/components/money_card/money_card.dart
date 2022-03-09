@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 import '../../themes/app_colors.dart';
 import '../../themes/app_text_styles.dart';
 
-class MoneyCard extends StatefulWidget {
-  const MoneyCard({ Key? key }) : super(key: key);
+class MoneyCard extends StatelessWidget {
+  final bool visibility;
 
-  @override
-  State<MoneyCard> createState() => _MoneyCardState();
-}
+  const MoneyCard({ Key? key, required this.visibility }) : super(key: key);
 
-class _MoneyCardState extends State<MoneyCard> {
   @override
   Widget build(BuildContext context) {
+    double _money = 34000;
+
     return Container(
       decoration: BoxDecoration(
         color: AppColors.card,
@@ -38,7 +37,7 @@ class _MoneyCardState extends State<MoneyCard> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text("R\$ 34.000,00", style: TextStyles.price),
+                visibility ? Text("_.__", style: TextStyles.textsSimple,) : Text("R\$ ${_money}0", style: TextStyles.textsSimple,),
                 Text("em novos pedidos", style: TextStyles.moneyText)
               ],
             )

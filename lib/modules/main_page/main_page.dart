@@ -14,7 +14,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin {
   Icon _myIcon = Icon(Icons.visibility);
-  bool _buttonClick = false;
+  bool buttonClick = false;
 
   late AnimationController animationController;
   late Animation degOneTranslationAnimation;
@@ -86,21 +86,21 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
                         color: AppColors.options,
                         onPressed: () {
                           setState(() => {
-                            if (!_buttonClick) {
+                            if (!buttonClick) {
                               _myIcon = Icon(Icons.visibility_off),
-                              _buttonClick = true
+                              buttonClick = true
                             } else {
                               _myIcon = Icon(Icons.visibility),
-                              _buttonClick = false
+                              buttonClick = false
                             }
                           });
                         },
                       )
                     ],
                   ),
-                  DataCard(),
+                  DataCard(visibility: buttonClick,),
                   SizedBox(height: 25,),
-                  MoneyCard(),
+                  MoneyCard(visibility: buttonClick,),
                   SizedBox(height: 150,),
                 ],
               ),

@@ -2,16 +2,17 @@ import 'package:desafio_layout/shared/themes/app_colors.dart';
 import 'package:desafio_layout/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
-class DataCard extends StatefulWidget {
-  const DataCard({ Key? key }) : super(key: key);
+class DataCard extends StatelessWidget {
+  final bool visibility;
 
-  @override
-  State<DataCard> createState() => _DataCardState();
-}
+  const DataCard({ Key? key, required this.visibility }) : super(key: key);
 
-class _DataCardState extends State<DataCard> {
   @override
   Widget build(BuildContext context) {
+    int _requests = 12;
+    int _clients = 20;
+    int _cities = 20;
+
     return Container(
       decoration: BoxDecoration(
         color: AppColors.card,
@@ -32,10 +33,7 @@ class _DataCardState extends State<DataCard> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  "12",
-                  style: TextStyles.textsSimple,
-                ),
+                visibility ? Text("*", style: TextStyles.textsSimple,) : Text("${_requests}", style: TextStyles.textsSimple,),
                 Icon(
                   Icons.shop_2,
                   size: 55,
@@ -53,10 +51,7 @@ class _DataCardState extends State<DataCard> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  "20",
-                  style: TextStyles.textsSimple,
-                ),
+                visibility ? Text("*", style: TextStyles.textsSimple,) : Text("${_clients}", style: TextStyles.textsSimple,),
                 Icon(
                   Icons.people_alt,
                   size: 55,
@@ -74,10 +69,7 @@ class _DataCardState extends State<DataCard> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  "20",
-                  style: TextStyles.textsSimple,
-                ),
+                visibility ? Text("*", style: TextStyles.textsSimple,) : Text("${_cities}", style: TextStyles.textsSimple,),
                 Icon(
                   Icons.location_city,
                   size: 55,
