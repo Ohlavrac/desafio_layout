@@ -1,3 +1,4 @@
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:desafio_layout/shared/components/data_card/data_card.dart';
 import 'package:desafio_layout/shared/components/floatActionButtonAnim/floatActionButtonAnim.dart';
 import 'package:desafio_layout/shared/components/money_card/money_card.dart';
@@ -15,6 +16,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin {
   Icon _myIcon = Icon(Icons.visibility);
   bool buttonClick = false;
+  int _currentIndex = 0;
 
   late AnimationController animationController;
   late Animation degOneTranslationAnimation;
@@ -174,6 +176,37 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
                 ),
               ],
           ))
+        ],
+      ),
+      bottomNavigationBar: BottomNavyBar(
+        backgroundColor: AppColors.background,
+        selectedIndex: _currentIndex,
+        showElevation: false,
+        itemCornerRadius: 15,
+        curve: Curves.easeIn,
+        onItemSelected: (index) => setState(() => _currentIndex = index),
+        items: [
+          BottomNavyBarItem(icon: 
+            Icon(Icons.home, size: 30,), 
+            title: Text("Home", style: TextStyles.textsSimple,), 
+            activeColor: AppColors.primary, 
+            textAlign: TextAlign.center,
+          ),
+          BottomNavyBarItem(icon: Icon(Icons.shop_2, size: 30), 
+            title: Text("Loja", style: TextStyles.textsSimple,), 
+            activeColor: AppColors.primary, 
+            textAlign: TextAlign.center
+          ),
+          BottomNavyBarItem(icon: Icon(Icons.people_alt, size: 30), 
+            title: Text("Pessoas", style: TextStyles.textsSimple,), 
+            activeColor: AppColors.primary, 
+            textAlign: TextAlign.center
+          ),
+          BottomNavyBarItem(icon: Icon(Icons.escalator, size: 30), 
+            title: Text("Dados", style: TextStyles.textsSimple,), 
+            activeColor: AppColors.primary, 
+            textAlign: TextAlign.center
+          ),
         ],
       ),
     );
