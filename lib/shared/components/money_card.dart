@@ -1,13 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../themes/app_colors.dart';
-import '../../themes/app_text_styles.dart';
 
 class MoneyCard extends StatelessWidget {
   final bool visibility;
+  final ThemeData? theme;
 
-  const MoneyCard({ Key? key, required this.visibility }) : super(key: key);
+  const MoneyCard({ Key? key, required this.visibility, this.theme }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,30 +12,30 @@ class MoneyCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.card,
+        color: theme?.colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [BoxShadow(
-          color: Colors.grey.withOpacity(0.5),
+          color: theme!.colorScheme.shadow,
           spreadRadius: 3,
-          blurRadius: 7,
-          offset: Offset(2, 3),
+          blurRadius: 6,
+          offset: Offset(4, 5),
         )]
       ),
       child: Padding(
-        padding: const EdgeInsets.only(top: 40, bottom: 40, left: 30, right: 30),
+        padding: const EdgeInsets.only(top: 35, bottom: 35, left: 30, right: 30),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Icon(
               Icons.shop_2,
               size: 65,
-              color: AppColors.primary,
+              color: theme?.colorScheme.primary,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                visibility ? Text("R\$ _.__", style: TextStyles.price,) : Text("R\$ ${_money}0", style: TextStyles.price,),
-                Text("em novos pedidos", style: TextStyles.moneyText)
+                visibility ? Text("R\$ _.__            ", style: theme?.textTheme.labelLarge,) : Text("R\$ ${_money}0", style: theme?.textTheme.labelLarge,),
+                Text("em novos pedidos", style: theme?.textTheme.labelSmall)
               ],
             )
           ],

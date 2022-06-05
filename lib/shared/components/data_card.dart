@@ -1,11 +1,10 @@
-import 'package:desafio_layout/shared/themes/app_colors.dart';
-import 'package:desafio_layout/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class DataCard extends StatelessWidget {
   final bool visibility;
+  final ThemeData? theme;
 
-  const DataCard({ Key? key, required this.visibility }) : super(key: key);
+  const DataCard({ Key? key, required this.visibility, this.theme }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +14,13 @@ class DataCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.card,
+        color: theme?.colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [BoxShadow(
-          color: Colors.grey.withOpacity(0.5),
+          color: theme!.colorScheme.shadow,
           spreadRadius: 3,
-          blurRadius: 7,
-          offset: Offset(2, 3),
+          blurRadius: 6,
+          offset: const Offset(4, 5),
         )]
       ),
       child: Padding(
@@ -33,16 +32,16 @@ class DataCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                visibility ? Text("*", style: TextStyles.textsSimple,) : Text("${_requests}", style: TextStyles.textsSimple,),
+                visibility ? Text("*", style: theme?.textTheme.displaySmall,) : Text("$_requests", style: theme?.textTheme.displaySmall,),
                 Icon(
                   Icons.shop_2,
                   size: 55,
-                  color: AppColors.primary,
+                  color: theme?.colorScheme.primary,
                 ),
                 Column(
                   children: [
-                    Text("Novos", style: TextStyles.textsSimple),
-                    Text("Pedidos", style: TextStyles.textsSimple)
+                    Text("Novos", style: theme?.textTheme.labelSmall),
+                    Text("Pedidos", style: theme?.textTheme.labelSmall)
                   ],
                 )
               ],
@@ -51,16 +50,16 @@ class DataCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                visibility ? Text("*", style: TextStyles.textsSimple,) : Text("${_clients}", style: TextStyles.textsSimple,),
+                visibility ? Text("*", style: theme?.textTheme.displaySmall,) : Text("$_clients", style: theme?.textTheme.displaySmall,),
                 Icon(
                   Icons.people_alt,
                   size: 55,
-                  color: AppColors.primary,
+                  color: theme?.colorScheme.primary,
                 ),
                 Column(
                   children: [
-                    Text("Novos", style: TextStyles.textsSimple),
-                    Text("Clientes", style: TextStyles.textsSimple)
+                    Text("Novos", style: theme?.textTheme.labelSmall),
+                    Text("Clientes", style: theme?.textTheme.labelSmall)
                   ],
                 )
               ],
@@ -69,16 +68,16 @@ class DataCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                visibility ? Text("*", style: TextStyles.textsSimple,) : Text("${_cities}", style: TextStyles.textsSimple,),
+                visibility ? Text("*", style: theme?.textTheme.displaySmall,) : Text("$_cities", style: theme?.textTheme.displaySmall,),
                 Icon(
                   Icons.location_city,
                   size: 55,
-                  color: AppColors.primary,
+                  color: theme?.colorScheme.primary,
                 ),
                 Column(
                   children: [
-                    Text("Novas", style: TextStyles.textsSimple),
-                    Text("Cidades", style: TextStyles.textsSimple)
+                    Text("Novas", style: theme?.textTheme.labelSmall),
+                    Text("Cidades", style: theme?.textTheme.labelSmall)
                   ],
                 )
               ],

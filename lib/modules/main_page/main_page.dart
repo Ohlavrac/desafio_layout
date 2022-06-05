@@ -1,10 +1,11 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:desafio_layout/shared/components/data_card/data_card.dart';
-import 'package:desafio_layout/shared/components/floatActionButtonAnim/floatActionButtonAnim.dart';
-import 'package:desafio_layout/shared/components/money_card/money_card.dart';
-import 'package:desafio_layout/shared/themes/app_text_styles.dart';
+import 'package:desafio_layout/change_theme.dart';
+import 'package:desafio_layout/shared/components/btn_navigationbar.dart';
+import 'package:desafio_layout/shared/components/data_card.dart';
+import 'package:desafio_layout/shared/components/floatActionButtonAnim.dart';
+import 'package:desafio_layout/shared/components/money_card.dart';
 import 'package:flutter/material.dart';
 import 'package:desafio_layout/shared/themes/app_colors.dart';
+
 
 class MainPage extends StatefulWidget {
   const MainPage({ Key? key }) : super(key: key);
@@ -14,9 +15,13 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin {
-  Icon _myIcon = Icon(Icons.visibility);
+  Icon _myIcon = const Icon(Icons.visibility);
+  Icon _themeModeIcon = const Icon(Icons.dark_mode);
   bool buttonClick = false;
-  int _currentIndex = 0;
+  final int _currentIndex = 0;
+  bool isDark = false;
+  ChangeTheme myTheme = ChangeTheme();
+  ThemeData? theme;
 
   late AnimationController animationController;
   late Animation degOneTranslationAnimation;
@@ -28,12 +33,13 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
 
   @override
   void initState() {
-    animationController = AnimationController(vsync: this,duration: Duration(microseconds: 250));
+    animationController = AnimationController(vsync: this,duration: const Duration(microseconds: 250));
     degOneTranslationAnimation = Tween(begin: 0.0, end: 1.0).animate(animationController);
     super.initState();
+    theme = myTheme.currentTheme();
     animationController.addListener(() {
       setState(() {
-        
+        myTheme.currentTheme();
       });
     });
   }
@@ -41,7 +47,28 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: theme?.colorScheme.background,
+      appBar: AppBar(
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: _themeModeIcon,
+            onPressed: () {
+              setState(() => {
+                if (isDark) {
+                  _themeModeIcon = const Icon(Icons.dark_mode),
+                  isDark = false
+                } else {
+                  _themeModeIcon = const Icon(Icons.light_mode),
+                  isDark = true
+                },
+                myTheme.switchTheme(),
+                theme = myTheme.currentTheme()
+              });
+            },
+          )
+        ],
+      ),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -55,20 +82,20 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        CircleAvatar(
+                        const CircleAvatar(
                           radius: 45,
-                          backgroundImage: NetworkImage("https://avatars.githubusercontent.com/u/57482542?v=4"),
+                          backgroundImage: AssetImage("assets/profile.png"),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
                               "Olá",
-                              style: TextStyles.textsSimple,
+                              style: theme?.textTheme.titleSmall,
                             ),
                             Text(
                               "Viktor!",
-                              style: TextStyles.texts,
+                              style: theme?.textTheme.titleLarge,
                             )
                           ],
                         ),
@@ -80,19 +107,19 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
                     children: [
                       Text(
                         "Parabéns! Esse mês você fez",
-                        style: TextStyles.textsSimple,
+                        style: theme?.textTheme.labelMedium,
                       ),
                       IconButton(
                         icon: _myIcon,
                         iconSize: 35,
-                        color: AppColors.options,
+                        color: Theme.of(context).colorScheme.surface,
                         onPressed: () {
                           setState(() => {
                             if (!buttonClick) {
-                              _myIcon = Icon(Icons.visibility_off),
+                              _myIcon = const Icon(Icons.visibility_off),
                               buttonClick = true
                             } else {
-                              _myIcon = Icon(Icons.visibility),
+                              _myIcon = const Icon(Icons.visibility),
                               buttonClick = false
                             }
                           });
@@ -100,26 +127,24 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
                       )
                     ],
                   ),
-                  DataCard(visibility: buttonClick,),
-                  SizedBox(height: 25,),
-                  MoneyCard(visibility: buttonClick,),
-                  SizedBox(height: 150,),
+                  DataCard(visibility: buttonClick, theme: theme),
+                  const SizedBox(height: 25,),
+                  MoneyCard(visibility: buttonClick, theme: theme),
+                  const SizedBox(height: 150,),
                 ],
               ),
             ),
           ),
           Positioned(
-            right: 10,
-            bottom: 10,
+            right: 15,
+            bottom: 15,
             child: Stack(
               children: [
                 Transform.translate(
                   offset: Offset.fromDirection(getRadiansFromDegree(270), degOneTranslationAnimation.value * 100),
                   child: CircularButton(
-                    color: AppColors.primary,
-                    width: 55,
-                    height: 55,
-                    icon: Icon(
+                    color: AppColors.options,
+                    icon: const Icon(
                       Icons.shop,
                       color: Colors.white,
                     ),
@@ -131,11 +156,9 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
                 Transform.translate(
                   offset: Offset.fromDirection(getRadiansFromDegree(225), degOneTranslationAnimation.value * 100),
                   child: CircularButton(
-                    color: AppColors.primary,
-                    width: 55,
-                    height: 55,
-                    icon: Icon(
-                      Icons.people,
+                    color: AppColors.options,
+                    icon: const Icon(
+                      Icons.person,
                       color: Colors.white,
                     ),
                     onClick: () => {
@@ -146,11 +169,9 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
                 Transform.translate(
                   offset: Offset.fromDirection(getRadiansFromDegree(180), degOneTranslationAnimation.value * 100),
                   child: CircularButton(
-                    color: AppColors.primary,
-                    width: 55,
-                    height: 55,
-                    icon: Icon(
-                      Icons.people,
+                    color: AppColors.options,
+                    icon: const Icon(
+                      Icons.person_add,
                       color: Colors.white,
                     ),
                     onClick: () => {
@@ -160,9 +181,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
                 ),
                 CircularButton(
                   color: AppColors.primary,
-                  width: 60,
-                  height: 60,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.add,
                     color: Colors.white,
                   ),
@@ -178,37 +197,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
           ))
         ],
       ),
-      bottomNavigationBar: BottomNavyBar(
-        backgroundColor: AppColors.background,
-        selectedIndex: _currentIndex,
-        showElevation: false,
-        itemCornerRadius: 15,
-        curve: Curves.easeIn,
-        onItemSelected: (index) => setState(() => _currentIndex = index),
-        items: [
-          BottomNavyBarItem(icon: 
-            Icon(Icons.home, size: 30,), 
-            title: Text("Home", style: TextStyles.textsSimple,), 
-            activeColor: AppColors.primary, 
-            textAlign: TextAlign.center,
-          ),
-          BottomNavyBarItem(icon: Icon(Icons.shop_2, size: 30), 
-            title: Text("Loja", style: TextStyles.textsSimple,), 
-            activeColor: AppColors.primary, 
-            textAlign: TextAlign.center
-          ),
-          BottomNavyBarItem(icon: Icon(Icons.people_alt, size: 30), 
-            title: Text("Pessoas", style: TextStyles.textsSimple,), 
-            activeColor: AppColors.primary, 
-            textAlign: TextAlign.center
-          ),
-          BottomNavyBarItem(icon: Icon(Icons.escalator, size: 30), 
-            title: Text("Dados", style: TextStyles.textsSimple,), 
-            activeColor: AppColors.primary, 
-            textAlign: TextAlign.center
-          ),
-        ],
-      ),
+      bottomNavigationBar: BtnNavigationBar(currentIndex: _currentIndex, theme: theme,)
     );
   }
 }
