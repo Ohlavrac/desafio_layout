@@ -1,4 +1,5 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:desafio_layout/shared/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class BtnNavigationBar extends StatefulWidget {
@@ -41,7 +42,7 @@ class _BtnNavigationBarState extends State<BtnNavigationBar> {
           BottomNavyBarItem(icon: Icon(Icons.show_chart, size: 30,color: widget.theme!.colorScheme.onSurface), 
             title: Text("Dados", style: widget.theme?.textTheme.titleMedium,), 
             activeColor: widget.theme!.colorScheme.primary, 
-            textAlign: TextAlign.center
+            textAlign: TextAlign.center,
           ),
         ],
       );
