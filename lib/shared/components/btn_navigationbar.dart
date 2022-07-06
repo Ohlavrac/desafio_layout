@@ -1,5 +1,4 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:desafio_layout/shared/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class BtnNavigationBar extends StatefulWidget {
